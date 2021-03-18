@@ -7,9 +7,22 @@ on:
   - cron: '0 6 * * 1' # Run every Monday at 06:00 (UTC)
   
 jobs:
-  build:
+  check-wrapper:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: gradle/wrapper-validation-action@v1
+
+  build-java:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
     - run: ./gradlew assembleDebug --warning-mode=all
+      working-directory: java
+
+  build-kotlin:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: ./gradlew assembleDebug --warning-mode=all
+      working-directory: kotlin
